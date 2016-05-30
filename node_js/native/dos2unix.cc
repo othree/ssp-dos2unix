@@ -53,7 +53,7 @@ string to_unix_line_endings(string contents) {
 string dos2unix_str(string filename) {
     ifstream i;
     stringstream contents;
-    i.open(filename, ios::binary);
+    i.open(filename.c_str(), ios::binary);
     contents << i.rdbuf();
     i.close();
     if(is_ascii(filename) && is_dos_eol(filename)) {
@@ -66,12 +66,12 @@ int dos2unix(string filename) {
     if(is_ascii(filename) && is_dos_eol(filename)) {
         ifstream i;
         stringstream contents;
-        i.open(filename, ios::binary);
+        i.open(filename.c_str(), ios::binary);
         contents << i.rdbuf();
         i.close();
         string out = to_unix_line_endings(contents.str());
         ofstream o;
-        o.open(filename, ios::out | ios::binary);
+        o.open(filename.c_str(), ios::out | ios::binary);
         o << out;
         o.close();
     }
